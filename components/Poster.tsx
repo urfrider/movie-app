@@ -13,7 +13,6 @@ interface IPosterProps {
 }
 
 const Poster: React.FC<IPosterProps> = ({ path }) => {
-  console.log(path);
   return <Image source={{ uri: imagePath(path) }} />;
 };
 

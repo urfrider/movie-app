@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { StyleSheet, useColorScheme, View } from "react-native";
 import { imagePath } from "../util";
-// import { BlurView } from "@react-native-community/blur";
 import { BlurView } from "expo-blur";
-
 import Poster from "./Poster";
 
 const BgImg = styled.Image`
