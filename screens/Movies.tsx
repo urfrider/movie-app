@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator, Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -59,6 +59,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = ({
     await Promise.all([getTrending(), getUpcoming(), getNowPlaying()]);
     setLoading(false);
   };
+
   useEffect(() => {
     getData();
   }, []);
