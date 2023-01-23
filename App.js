@@ -8,9 +8,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "styled-components/native";
 import Root from "./navigation/Root";
 import { darkTheme, lightTheme } from "./styled";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 // Function to load images and fonts
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
@@ -60,12 +63,14 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <NavigationContainer>
-          <Root />
-        </NavigationContainer>
-      </View>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <NavigationContainer>
+            <Root />
+          </NavigationContainer>
+        </View>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
