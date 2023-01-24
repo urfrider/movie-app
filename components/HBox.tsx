@@ -38,8 +38,9 @@ const HBox: React.FC<IHBoxProps> = ({ title, data }) => (
       renderItem={({ item }) => (
         <HMedia
           posterPath={item.poster_path || ""} // URL to default image if none
-          title={item.original_title ?? item.original_name}
+          originalTitle={item.original_title ?? item.original_name}
           rating={item.vote_average}
+          fullData={item}
         />
       )}
     />

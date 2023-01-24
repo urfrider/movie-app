@@ -1,14 +1,18 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import styled from "styled-components/native";
+import { Movie, TV } from "../api";
 import Poster from "./Poster";
 import Rating from "./Rating";
 
 interface IVMediaProps {
   posterPath: string;
-  title: string;
+  originalTitle: string;
   overview: string;
   releasedDate?: string;
   rating?: number;
+  fullData: Movie | TV;
 }
 
 const Title = styled.Text`
@@ -44,30 +48,47 @@ const ReleaseDate = styled.Text`
 
 const VMedia: React.FC<IVMediaProps> = ({
   posterPath,
-  title,
+  originalTitle,
   releasedDate,
   overview,
   rating,
+  fullData,
 }) => {
+  const navigation = useNavigation();
+  const toDetail = () => {
+    //@ts-ignore
+    navigation.navigate("Stack", {
+      screen: "Detail",
+      params: {
+        ...fullData,
+      },
+    });
+  };
   return (
-    <UpcomingMovie>
-      <Poster path={posterPath} />
-      <Column>
-        <Title>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Title>
-        {releasedDate && (
-          <ReleaseDate>
-            {new Date(releasedDate).toLocaleDateString()}
-          </ReleaseDate>
-        )}
-        {rating && <Rating rating={rating} />}
-        <Overview>
-          {overview === "" && "Coming Soon"}
-          {overview !== "" && overview.length > 140
-            ? overview.slice(0, 140) + "..."
-            : overview}
-        </Overview>
-      </Column>
-    </UpcomingMovie>
+    <TouchableOpacity onPress={toDetail}>
+      <UpcomingMovie>
+        <Poster path={posterPath} />
+        <Column>
+          <Title>
+            {originalTitle.length > 30
+              ? `${originalTitle.slice(0, 30)}...`
+              : originalTitle}
+          </Title>
+          {releasedDate && (
+            <ReleaseDate>
+              {new Date(releasedDate).toLocaleDateString()}
+            </ReleaseDate>
+          )}
+          {rating && <Rating rating={rating} />}
+          <Overview>
+            {overview === "" && "Coming Soon"}
+            {overview !== "" && overview.length > 140
+              ? overview.slice(0, 140) + "..."
+              : overview}
+          </Overview>
+        </Column>
+      </UpcomingMovie>
+    </TouchableOpacity>
   );
 };
 
