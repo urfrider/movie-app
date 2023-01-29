@@ -49,7 +49,7 @@ const Title = styled.Text`
 
 const Overview = styled.Text`
   color: ${(props) => props.theme.textColor};
-  margin: 20px 0px;
+  margin: 20px 20px;
 `;
 
 const VideoButton = styled.TouchableOpacity`
