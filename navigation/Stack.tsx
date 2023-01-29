@@ -19,6 +19,7 @@ const Stack = () => {
         headerTitleAlign: "center",
       }}
     >
+      {/* @ts-ignore */}
       <NativeStack.Screen name="Detail" component={Detail} />
     </NativeStack.Navigator>
   );

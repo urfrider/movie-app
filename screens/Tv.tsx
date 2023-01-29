@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { useQuery, useQueryClient } from "react-query";
-import { tvApi } from "../api";
+import { tvApi, TVResponse } from "../api";
 import HBox from "../components/HBox";
 import Loader from "../components/Loader";
 
 function Tv() {
   const queryClient = useQueryClient();
   const [refreshing, setRefreshing] = useState(false);
-  const { isLoading: todayLoading, data: todayData } = useQuery(
+  const { isLoading: todayLoading, data: todayData } = useQuery<TVResponse>(
     ["tv", "today"],
     tvApi.airingToday
   );
-  const { isLoading: topLoading, data: topData } = useQuery(
+  const { isLoading: topLoading, data: topData } = useQuery<TVResponse>(
     ["tv", "top"],
     tvApi.topRated
   );
-  const { isLoading: trendingLoading, data: trendingData } = useQuery(
-    ["tv", "trending"],
-    tvApi.trending
-  );
+  const { isLoading: trendingLoading, data: trendingData } =
+    useQuery<TVResponse>(["tv", "trending"], tvApi.trending);
   const onRefresh = async () => {
     setRefreshing(true);
     await queryClient.refetchQueries(["tv"]);
@@ -37,9 +35,9 @@ function Tv() {
       }
       contentContainerStyle={{ paddingVertical: 30 }}
     >
-      <HBox title="Trending TV" data={todayData.results} />
-      <HBox title="Airing Today" data={topData.results} />
-      <HBox title="Top Rated" data={trendingData.results} />
+      <HBox title="Trending TV" data={todayData?.results} />
+      <HBox title="Airing Today" data={topData?.results} />
+      <HBox title="Top Rated" data={trendingData?.results} />
     </ScrollView>
   );
 }
